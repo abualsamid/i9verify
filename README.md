@@ -1,3 +1,3 @@
 # PerfectTrax
 
-This is the perfecttrax application by [Ahmad Abualsamid]
+This is play code from the rails tutorial book. trying to learn rails. 
