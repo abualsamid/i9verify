@@ -31,6 +31,9 @@ gem 'bcrypt-ruby', '~> 3.0.0'
 # To use Jbuilder templates for JSON
 gem 'jbuilder'
 
+gem 'will_paginate', '3.0.3'
+gem 'bootstrap-will_paginate', '0.0.6'
+
 # Use unicorn as the app server
 #gem 'unicorn'
 
