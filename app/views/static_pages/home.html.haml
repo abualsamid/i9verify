@@ -1,8 +1,6 @@
--# provide(:title,"About")
-.center.hero-unit
-	%h1 Welcome to Perfect Trax
-	%h1= yield(:title)
-	%h2 
-		This is the home page for <a href='http://perfecttrax.com'>Perfect Trax Application</a>
-	=link_to "Sign up now!",signup_path, class: "btn btn-large btn-primary"
-=link_to image_tag("rails.png",alt: "Rails"), 'http://rubyonrails.org/'
+- provide(:title,"Perfect Trax")
+- if signed_in?
+	= render 'shared/authenticatedhome'
+- else
+	= render 'shared/anonhome'
+
