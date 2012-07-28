@@ -9,8 +9,8 @@
 			=render 'shared/micropost_form'
 	.span8
 		=render partial: 'follow_form' if signed_in?
+		%h3= "Crumbs #{@user.microposts.count}"
 		- if @user.microposts.any?
-			%h3= "Microposts #{@user.microposts.count}"
 			%ol.microposts
 				=render @microposts
 			= will_paginate @microposts
