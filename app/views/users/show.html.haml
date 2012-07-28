@@ -2,11 +2,13 @@
 .row
 	%aside.span4
 		%section
-			%h1
-				=gravatar_for @user
-				=@user.name
-	
+			=render partial: 'shared/user_info'
+		%section
+			=render 'shared/stats'
+		%section
+			=render 'shared/micropost_form'
 	.span8
+		=render partial: 'follow_form' if signed_in?
 		- if @user.microposts.any?
 			%h3= "Microposts #{@user.microposts.count}"
 			%ol.microposts
