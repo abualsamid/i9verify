@@ -8,6 +8,7 @@ gem "haml-rails"
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3'
+gem 'mysql2'
 #gem 'libv8', '~> 3.3.10'
 #gem 'therubyracer','0.10.1', :require => 'v8'
 gem "execjs"

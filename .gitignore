@@ -19,3 +19,5 @@ doc/
 *~
 .project
 bundler_stubs/
+config/
+database.yml

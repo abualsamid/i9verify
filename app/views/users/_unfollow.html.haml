@@ -1,2 +1,4 @@
-= form_for(current_user.relationships.find_by_followed_id(@user), html: {method: :delete}, remote: true) do |f|
-	= f.submit "Unfollow", class: "btn btn-large"
+- user ||= @user
+- btn_size ||= "btn-large"
+= form_for(current_user.relationships.find_by_followed_id(user), html: {method: :delete}, remote: true) do |f|
+	= f.submit "Unfollow", class: "btn #{btn_size}"
