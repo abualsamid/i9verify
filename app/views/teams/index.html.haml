@@ -1,11 +1,13 @@
 - provide(:title,'My Teams List')
-%h1 Team List
-= will_paginate
-%ul.teams
-	= render @teams
-= will_paginate
-=form_for(@team) do |f|
-	= render 'shared/error_messages', object: f.object
-	.field= f.text_area :name, placeholder: "Team Name"
-	.field= f.text_area :description, placeholder: "Team Description"
-	= f.submit "Add Team", class: "btn btn-large btn-primary"
+.row
+
+	%aside.span4
+		=form_for(@team, remote: "true") do |f|
+			= render 'shared/error_messages', object: f.object
+			.field= f.text_field :name, placeholder: "Team Name"
+			.field= f.text_area :description, placeholder: "Team Description"
+			= f.submit "Add Team", class: "btn btn-medium btn-primary"
+		#teams_errors
+	#teams.span8
+		= render partial: 'teams'
+

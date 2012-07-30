@@ -1,0 +1,6 @@
+:plain
+	$("#teams").html('#{escape_javascript render('teams/teams')}');
+	document.getElementById("new_team").reset();
+	$("#notice").replaceWith('#{escape_javascript(render partial: 'layouts/flash', locals: {flash: flash }).html_safe}');
+	$("#teams_errors").html('#{escape_javascript(render partial: 'shared/error_messages', locals: {object: @n })}');
+	

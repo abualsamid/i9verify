@@ -112,6 +112,12 @@ footer {
 
 
 /* miscellaneous */
+ ul {
+   list-style: none;
+   li {
+     margin-left: 10px;
+   }
+ }
 
 .debug_dump {
   clear: both;
