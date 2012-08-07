@@ -4,10 +4,12 @@ gem 'rails', '3.2.6'
 gem 'bootstrap-sass', '>= 2.0.0'
 gem "haml"
 gem "haml-rails"
+gem 'annotate', git: 'git://github.com/ctran/annotate_models.git'
+gem 'simple_form', git: 'git://github.com/plataformatec/simple_form.git'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
+# gem 'sqlite3'
 gem 'mysql2'
 #gem 'libv8', '~> 3.3.10'
 #gem 'therubyracer','0.10.1', :require => 'v8'
@@ -25,6 +27,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem 'client_side_validations'
 
 # To use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.0.0'

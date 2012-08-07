@@ -11,7 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120730013704) do
+ActiveRecord::Schema.define(:version => 20120804212543) do
+
+  create_table "companies", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "microposts", :force => true do |t|
     t.string   "content"
@@ -31,6 +38,51 @@ ActiveRecord::Schema.define(:version => 20120730013704) do
   add_index "relationships", ["follower_id", "followed_id"], :name => "index_relationships_on_follower_id_and_followed_id", :unique => true
   add_index "relationships", ["follower_id"], :name => "index_relationships_on_follower_id"
 
+  create_table "sessions", :force => true do |t|
+    t.string   "session_id", :null => false
+    t.text     "data"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
+  add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
+
+  create_table "stacks", :force => true do |t|
+    t.string   "name",       :default => "", :null => false
+    t.integer  "user_id"
+    t.integer  "company_id"
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+  end
+
+  add_index "stacks", ["company_id"], :name => "index_stacks_on_company_id"
+  add_index "stacks", ["user_id"], :name => "index_stacks_on_user_id"
+
+  create_table "status", :force => true do |t|
+    t.string   "name",       :default => "",   :null => false
+    t.integer  "sequence",   :default => 999,  :null => false
+    t.boolean  "isActive",   :default => true, :null => false
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+  end
+
+  create_table "tasks", :force => true do |t|
+    t.integer  "company_id",                  :null => false
+    t.integer  "user_id",                     :null => false
+    t.integer  "stack_id",                    :null => false
+    t.string   "name",        :default => "", :null => false
+    t.text     "description",                 :null => false
+    t.datetime "due"
+    t.integer  "status_id",   :default => 0,  :null => false
+    t.integer  "priority",    :default => 1,  :null => false
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
+  end
+
+  add_index "tasks", ["company_id", "user_id"], :name => "index_tasks_on_company_id_and_user_id"
+  add_index "tasks", ["stack_id"], :name => "index_tasks_on_stack_id"
+
   create_table "teams", :force => true do |t|
     t.string   "name"
     t.string   "description"
@@ -49,8 +101,10 @@ ActiveRecord::Schema.define(:version => 20120730013704) do
     t.datetime "updated_at",                         :null => false
     t.string   "password_digest"
     t.boolean  "admin",           :default => false
+    t.integer  "company_id",      :default => 0,     :null => false
   end
 
+  add_index "users", ["company_id"], :name => "index_users_on_company_id"
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
 
 end

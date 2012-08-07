@@ -6,6 +6,10 @@ Perfecttrax::Application.routes.draw do
     end
   end
   resources :teams
+  resources :stacks do
+  	resources :tasks
+  
+  end
   resources :sessions, only: [:new, :create, :destroy]
   resources :microposts, only: [:create, :destroy]
   resources :relationships, only: [:create, :destroy]

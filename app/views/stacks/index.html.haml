@@ -1,0 +1,12 @@
+- provide(:title,'My Stacks')
+.row
+
+	%aside.span4
+		=form_for(@stack, remote: "true") do |f|
+			= render 'shared/error_messages', object: f.object
+			.field= f.text_field :name, placeholder: "Stack Name"
+			= f.submit "Add Stack", class: "btn btn-medium btn-primary"
+		#stacks_errors
+	#stacks.span8
+		= render partial: 'stacks'
+

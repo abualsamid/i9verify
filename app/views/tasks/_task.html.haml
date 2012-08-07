@@ -1,0 +1,6 @@
+%li
+	%span.caption=task.name
+	%span.content=wrap(task.description)
+	%span.timestamp= "#{time_ago_in_words(task.updated_at)} ago."
+	- if current_user?(task.user)
+		/ = link_to "delete", stack_task_path, method: :delete, data: {confirm: "You sure?"}, title:task.name

@@ -1,0 +1,30 @@
+- provide(:title, @stack.name)
+.row
+	#new_task.span8
+		= simple_form_for([@stack,@task], validate: true, :html => { class: 'form-inline' }) do |f|
+			= render 'shared/error_messages', object: f.object
+			=f.input :name, placeholder: "Task", required: true, validate: {presence: true}, input_html: {class: "required"}
+			=f.input :description, placeholder: "Description"
+			=f.input :due, :html => {:class => nil}
+			.control-group.radio_buttons.optional
+				%label.radio_buttons.optional.control-label Priority
+				.controls
+					- 1.upto(5) do |v|
+						<input type='radio' value='#{v}' name='task[priority]' class='star required' />
+			%br
+			= f.input :status_id,
+				:collection => [ %w[Open 1], %w[Closed 2], %w[Pending 3]],
+				:as => :radio_buttons,
+				:item_wrapper_class => 'inline'
+			=f.button :submit,  input_html: { class: "btn btn-medium btn-primary" }
+			=f.error_notification
+		#tasks_errors
+.row
+	#tasks.span8
+		- if @stack.tasks.any?
+			%ol.tasks
+				=render @tasks 
+			= will_paginate @tasks
+=debug @task
+=debug @stack
+=debug @tasks
