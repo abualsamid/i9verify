@@ -1,0 +1,6 @@
+- if @tasks.any?
+	%h2 Task List
+	%ol.tasks
+		=render @tasks 
+	= will_paginate @tasks
+

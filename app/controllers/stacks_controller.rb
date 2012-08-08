@@ -2,7 +2,7 @@ class StacksController < ApplicationController
 	before_filter :signed_in_user
 
 	def index
-		@stacks = current_user.stacks.paginate(page: params[:page])
+		@stacks = current_user.stacks.paginate(page: params[:stacks_page])
 		@stack = Stack.new
 		@user = current_user
 	end
@@ -42,6 +42,7 @@ class StacksController < ApplicationController
 	end
 	
 	def show
+		@stacks = current_user.stacks.paginate(page: params[:stacks_page])
 		@stack = current_user.stacks.find_by_name(params[:id])
 		@task = @stack.tasks.build
 		@tasks = @stack.tasks.paginate(page: params[:page])

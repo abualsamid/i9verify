@@ -1,0 +1,6 @@
+:plain
+	$("#tasks").html('#{escape_javascript render('tasks/tasks')}');
+	document.getElementById("new_task").reset();
+	$("#notice").replaceWith('#{escape_javascript(render partial: 'layouts/flash', locals: {flash: flash }).html_safe}');
+	$("#tasks_errors").html('#{escape_javascript(render partial: 'shared/error_messages', locals: {object: @n })}');
+	

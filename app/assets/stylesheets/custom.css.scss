@@ -192,10 +192,7 @@ aside {
 
 input, textarea, select, .uneditable-input {
   border: 1px solid #bbb;
-  width: 100%;
-  padding: 10px;
   height: auto;
-  margin-bottom: 15px;
   @include box_sizing;
 	
 }
@@ -257,4 +254,9 @@ aside {
     height: 100px;
     margin-bottom: 5px;
   }
+}
+
+/* override some of the annoying bootstrap defaults */
+.controls > .radio:first-child, .controls > .checkbox:first-child {
+  padding-top: 0px;
 }

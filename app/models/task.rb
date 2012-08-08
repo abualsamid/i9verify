@@ -7,5 +7,5 @@ class Task < ActiveRecord::Base
 	validates :company_id, presence: true
 	validates :name, presence: true	
 	validates_presence_of :name
-	default_scope order: 'tasks.due DESC, tasks.priority, tasks.status_id'
+	default_scope order: 'tasks.status_id, tasks.due DESC, tasks.priority'
 end

@@ -1,6 +1,28 @@
 %li
-	%span.caption=task.name
+	- if task.due < Time.now
+		%span.late=task.name
+	- else
+		%span.caption=task.name
 	%span.content=wrap(task.description)
 	%span.timestamp= "#{time_ago_in_words(task.updated_at)} ago."
+	
 	- if current_user?(task.user)
-		/ = link_to "delete", stack_task_path, method: :delete, data: {confirm: "You sure?"}, title:task.name
+		= simple_form_for([@stack,task], validate: true, :html => { class: 'form-inline' }, remote: true) do |f|
+			%span.control-group.radio_buttons.optional
+				%span.controls
+					- 1.upto(5) do |v|
+						&nbsp;
+						- if v == task.priority
+							<input type='radio' value='#{v}' checked='checked' name='task[priority]' class='star required' />
+						- else
+							<input type='radio' value='#{v}' name='task[priority]' class='star required' />
+						&nbsp;
+			%span &nbsp;
+			= f.input :status_id,
+				:collection => [ %w[Open 100], %w[Pending 200], %w[Closed 300]],
+				label: false,
+				as: :radio_buttons
+			%span &nbsp;
+			=f.button :submit
+			=f.error_notification
+		= link_to "delete", stack_task_path(@stack.id,task.id), method: :delete, data: {confirm: "Confirm deleting task: #{task.name}. Are you sure?"}, title:task.name, remote: true

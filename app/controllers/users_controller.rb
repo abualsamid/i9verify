@@ -10,6 +10,7 @@ class UsersController < ApplicationController
   	@user = User.find(params[:id])
   	@microposts = @user.microposts.paginate(page: params[:page])
   	@micropost = Micropost.new
+  	@stacks = @user.stacks.paginate(page: params[:stack_page])
   end 
   
   def edit

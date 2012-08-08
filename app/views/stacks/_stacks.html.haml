@@ -1,6 +1,5 @@
 %h1 Stacks List
-= will_paginate
 %ol.stacks
 	= render @stacks
-= will_paginate
+= will_paginate @stacks, param_name: 'stacks_page'
 %hr
