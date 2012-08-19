@@ -1,35 +1,24 @@
 - provide(:title, @stack.name)
 .row
+	
 	%aside.span4
 		%h2 My Work Stacks
-		%ol.stacks
-			= render @stacks
-		= will_paginate
-
+		=form_for(@newstack, remote: "true") do |f|
+			= render 'shared/error_messages', object: f.object
+			.field= f.text_field :name, placeholder: "Stack Name"
+			= f.submit "Add Stack", class: "btn btn-medium btn-primary"
+		#stacks_errors
+		%hr
+		#stacks
+			= render partial: 'stacks'
+	
 	.span8
+		=render 'tasks/new'
+		%hr
+		
 		#tasks
 			=render 'tasks/tasks'
-		%hr
-		%h2 Add New Task
-		#new_task
-			= simple_form_for([@stack,@task], validate: true, :html => { class: nil }, remote: true) do |f|
-				= render 'shared/error_messages', object: f.object
-				=f.input :name, placeholder: "Task", required: true, validate: {presence: true}, input_html: {class: "required"}
-				=f.input :description, placeholder: "Description"
-				=f.input :due, :html => {:class => nil}
-				.control-group.radio_buttons.optional
-					%label.radio_buttons.optional.control-label Priority
-					.controls
-						- 1.upto(5) do |v|
-							<input type='radio' value='#{v}' name='task[priority]' class='star required' />
-				%br
-				= f.input :status_id,
-					:collection => [ %w[Open 100], %w[Pending 200], %w[Closed 300]],
-					:as => :radio_buttons,
-					:item_wrapper_class => 'inline'
-				=f.button :submit,  input_html: { class: "btn btn-medium btn-primary" }
-				=f.error_notification
-			#tasks_errors
+
 =debug @task
 =debug @stack
 =debug @tasks

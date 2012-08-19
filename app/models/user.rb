@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
     has_many :followers, through: :reverse_relationships, source: :follower
     has_many :teams
 	has_many :stacks
-	
+	has_many :tasks, through: :stacks
 	before_save { |user| user.email = email.downcase }
 
 	validates :name, presence: true, length: { maximum: 50 }

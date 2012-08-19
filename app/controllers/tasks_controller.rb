@@ -2,6 +2,7 @@ class TasksController < ApplicationController
 	before_filter :signed_in_user
 	before_filter :correct_user,   only: [:destroy ]
 	before_filter :correct_user_by_stack_name, only: [:update]
+
 	def new
 		@stack = current_user.stacks.find_by_name(params[:id])
 		
@@ -34,6 +35,9 @@ class TasksController < ApplicationController
 		end
 	end
 	
+	def show
+	end
+	
 	def create
 		begin  
 			
@@ -54,7 +58,7 @@ class TasksController < ApplicationController
 				respond_to do |format|
 			  		format.html { redirect_to @stack }
 			  		format.js do
-			  			@tasks = @stack.tasks.paginate(page: params[:page])
+			  			@tasks = @stack.tasks.page(params[:page])
 				
 			  		end
 				end
@@ -66,7 +70,7 @@ class TasksController < ApplicationController
 			respond_to do |format|
 		  		format.html { redirect_to current_user }
 		  		format.js do
-		  			@tasks = @stack.tasks.paginate(page: params[:page])
+		  			@tasks = @stack.tasks.page(params[:page])
 				
 				
 		  		end

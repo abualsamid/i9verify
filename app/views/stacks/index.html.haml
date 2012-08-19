@@ -2,11 +2,18 @@
 .row
 
 	%aside.span4
-		=form_for(@stack, remote: "true") do |f|
+		%h2 My Work Stacks
+		=form_for(@newstack, remote: "true") do |f|
 			= render 'shared/error_messages', object: f.object
 			.field= f.text_field :name, placeholder: "Stack Name"
 			= f.submit "Add Stack", class: "btn btn-medium btn-primary"
 		#stacks_errors
-	#stacks.span8
-		= render partial: 'stacks'
+		%hr
+		#stacks
+			= render partial: 'stacks'
+	.span8
+		=render 'tasks/new'
+		%hr
+		#tasks
+			=render 'tasks/tasks'
 

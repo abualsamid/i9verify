@@ -3,6 +3,7 @@ class Stack < ActiveRecord::Base
   belongs_to :company
   has_many :tasks, dependent: :destroy
   attr_accessible :name
+  validates_uniqueness_of :name
   
   def to_param
   	name.parameterize

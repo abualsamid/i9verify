@@ -1,15 +1,34 @@
 class StacksController < ApplicationController
 	before_filter :signed_in_user
+	before_filter :correct_user, only: [:destroy]
+	before_filter :prep_stacks, only: [:index, :show, :destroy]
 
 	def index
-		@stacks = current_user.stacks.paginate(page: params[:stacks_page])
-		@stack = Stack.new
-		@user = current_user
+		@stack = current_user.stacks.first
+		@task = @stack.tasks.build
+		@tasks = @stack.tasks.paginate(page: params[:page])
 	end
-	
+
+
+	def show
+		
+		@stack = current_user.stacks.find_by_name(params[:id])
+		if !@stack.nil? then
+			@task = @stack.tasks.build
+			@tasks = @stack.tasks.paginate(page: params[:page])
+		end
+		
+	end
+		
 	def new
+		@newstack = Stack.new
 	end
-	
+
+	def destroy
+		@stack.destroy
+		flash.now[:success]="Stack #{@stack.name} deleted."
+	end 	
+
 	def create
 		begin  
 			@stack = params[:stack]
@@ -41,10 +60,18 @@ class StacksController < ApplicationController
 		end	
 	end
 	
-	def show
-		@stacks = current_user.stacks.paginate(page: params[:stacks_page])
-		@stack = current_user.stacks.find_by_name(params[:id])
-		@task = @stack.tasks.build
-		@tasks = @stack.tasks.paginate(page: params[:page])
-	end
+	private
+		def prep_stacks
+			@stacks = current_user.stacks.paginate page: params[:stacks_page]
+			@newstack = Stack.new
+			@user = current_user
+
+		end
+		
+		def correct_user
+			@stack = current_user.stacks.find_by_name(params[:id])
+			rescue
+  				redirect_to root_path
+		end
+	
 end

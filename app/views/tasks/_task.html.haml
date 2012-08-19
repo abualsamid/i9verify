@@ -1,8 +1,10 @@
 %li
+	- if current_user?(task.user)
+		= link_to image_tag("delete.png", width: '16px'), stack_task_path(@stack.id,task.id), method: :delete, data: {confirm: "Confirm deleting task: #{task.name}. Are you sure?"}, title:task.name, remote: true
 	- if task.due < Time.now
 		%span.late=task.name
 	- else
-		%span.caption=task.name
+		%span.notlate=task.name
 	%span.content=wrap(task.description)
 	%span.timestamp= "#{time_ago_in_words(task.updated_at)} ago."
 	
@@ -25,4 +27,4 @@
 			%span &nbsp;
 			=f.button :submit
 			=f.error_notification
-		= link_to "delete", stack_task_path(@stack.id,task.id), method: :delete, data: {confirm: "Confirm deleting task: #{task.name}. Are you sure?"}, title:task.name, remote: true
+		
