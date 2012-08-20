@@ -1,4 +1,4 @@
-- if @tasks.any?
+- if @tasks && @tasks.any?
 	%h2 Task List
 	%ol.tasks
 		=render @tasks 

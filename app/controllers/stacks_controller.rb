@@ -5,8 +5,11 @@ class StacksController < ApplicationController
 
 	def index
 		@stack = current_user.stacks.first
-		@task = @stack.tasks.build
-		@tasks = @stack.tasks.paginate(page: params[:page])
+		if @stack then
+			@task = @stack.tasks.build
+			@tasks = @stack.tasks.paginate(page: params[:page])
+		end
+	
 	end
 
 
@@ -25,8 +28,35 @@ class StacksController < ApplicationController
 	end
 
 	def destroy
-		@stack.destroy
-		flash.now[:success]="Stack #{@stack.name} deleted."
+		begin
+			if @stack.tasks.any? then
+				flash.now[:error]="Failed to Delete Stack: #{@stack[:name]}: There are #{@stack.tasks.count} tasks in this Stack."
+			else
+				@stack.destroy
+				flash.now[:success]="Stack #{@stack.name} deleted."
+			
+			end 
+			
+			respond_to do |format|
+		  		format.html { redirect_to stacks_path }
+		  		format.js do
+		  			@stacks = current_user.stacks.paginate(page: params[:page])
+				
+		  		end
+			end
+			
+		rescue Exception => exception
+			flash.now[:error]="Failed to Delete Stack: #{@stack[:name]}: #{exception.message} "
+			respond_to do |format|
+		  		format.html { redirect_to stacks_path }
+		  		format.js do
+		  			@stacks = current_user.stacks.paginate(page: params[:page])
+				
+		  		end
+			end
+			
+		end
+
 	end 	
 
 	def create
@@ -69,7 +99,7 @@ class StacksController < ApplicationController
 		end
 		
 		def correct_user
-			@stack = current_user.stacks.find_by_name(params[:id])
+			@stack = current_user.stacks.find(params[:id])
 			rescue
   				redirect_to root_path
 		end

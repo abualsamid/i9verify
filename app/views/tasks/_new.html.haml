@@ -1,23 +1,24 @@
-%h2=@stack.name
-%fieldset
-	#new_task_container
-		= simple_form_for([@stack,@task], validate: true, :html => { class: nil }, remote: true) do |f|
-			= render 'shared/error_messages', object: f.object
-			=f.input :name, placeholder: "Task", required: true, validate: {presence: true}, input_html: {class: "required"}
-			#new_task_body{style: 'display:none;'}
-				=f.input :description, placeholder: "Description"
-				=f.input :due, :html => {:class => nil}
-				.control-group.radio_buttons.optional
-					%label.radio_buttons.optional.control-label Priority
-					.controls
-						- 1.upto(5) do |v|
-							<input type='radio' value='#{v}' name='task[priority]' class='star required' />
-				%br
-				= f.input :status_id,
-					:collection => [ %w[Open 100], %w[Pending 200], %w[Closed 300]],
-					:as => :radio_buttons,
-					:item_wrapper_class => 'inline'
-				=f.button :submit, class: "btn btn-medium btn-primary" 
-				=f.error_notification
-		#tasks_errors
+- if @stack and @task then
+	%h2=@stack.name
+	%fieldset
+		#new_task_container
+			= simple_form_for([@stack,@task], validate: true, :html => { class: nil }, remote: true) do |f|
+				= render 'shared/error_messages', object: f.object
+				=f.input :name, placeholder: "Task", required: true, validate: {presence: true}, input_html: {class: "required"}
+				#new_task_body{style: 'display:none;'}
+					=f.input :description, placeholder: "Description"
+					=f.input :due, :html => {:class => nil}
+					.control-group.radio_buttons.optional
+						%label.radio_buttons.optional.control-label Priority
+						.controls
+							- 1.upto(5) do |v|
+								<input type='radio' value='#{v}' name='task[priority]' class='star required' />
+					%br
+					= f.input :status_id,
+						:collection => [ %w[Open 100], %w[Pending 200], %w[Closed 300]],
+						:as => :radio_buttons,
+						:item_wrapper_class => 'inline'
+					=f.button :submit, class: "btn btn-medium btn-primary" 
+					=f.error_notification
+			#tasks_errors
 

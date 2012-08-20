@@ -1,11 +1,10 @@
 class Stack < ActiveRecord::Base
-  belongs_to :user
-  belongs_to :company
-  has_many :tasks, dependent: :destroy
-  attr_accessible :name
-  validates_uniqueness_of :name
+	extend FriendlyId
+	friendly_id :name, use: :scoped, scope: :user
+  	belongs_to :user
+  	belongs_to :company
+  	has_many :tasks, dependent: :destroy
+  	attr_accessible :name
+  	validates_uniqueness_of :name, scope:  [:user_id]
   
-  def to_param
-  	name.parameterize
-  end
 end

@@ -36,9 +36,12 @@ gem 'bcrypt-ruby', '~> 3.0.0'
 gem 'jbuilder'
 
 gem 'will_paginate'
+
 #gem 'kaminari'
 
 gem 'bootstrap-will_paginate'
+
+gem 'friendly_id'
 
 # Use unicorn as the app server
 gem 'unicorn'
