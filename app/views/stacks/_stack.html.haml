@@ -1,4 +1,2 @@
 %li
-	- if current_user?(stack.user) 
-		= link_to image_tag("delete.png", width: '16px'), stack, method: :delete, data: {confirm: "Confirm deleting Stack: #{stack.name}. Are you sure?"}, title:stack.name, remote: true
-	%strong= link_to "#{stack.name} (#{stack.tasks.count})",stack
+	= link_to "#{stack.name} (#{stack.tasks.count})",stack

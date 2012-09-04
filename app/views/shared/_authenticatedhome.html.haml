@@ -1,9 +1,9 @@
 .row
-	%aside.span4
+	.span4
 		%section= render 'shared/user_info'
 		%section= render 'shared/stats'
-		%section= render 'shared/micropost_form'
 		%section= render 'shared/mylinks'
 	.span8
-		%h3 Crumbs feed 
+		%section= render 'shared/micropost_form'
+		%br
 		=render 'shared/feed'

@@ -62,7 +62,7 @@ class UsersController < ApplicationController
       # Handle a successful save.
       sign_in @user
       flash[:success] = "#{@user.name}: Welcome to Perfect Trax!"
-      redirect_to @user 
+      redirect_to root_path
     else
       render 'new'
     end

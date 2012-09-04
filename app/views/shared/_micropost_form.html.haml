@@ -1,4 +1,4 @@
 =form_for(@micropost) do |f|
 	= render 'shared/error_messages', object: f.object
-	.field= f.text_area :content, placeholder: "Leave a crumb..."
-	= f.submit "Post", class: "btn btn-large btn-primary"
+	=f.text_area :content, placeholder: "say something...", rows: "4", style: 'width:100%'
+	= f.submit "Post", class: "btn btn-mini btn-primary"
