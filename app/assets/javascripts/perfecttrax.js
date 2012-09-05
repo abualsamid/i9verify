@@ -13,6 +13,7 @@ $(function() {
     log(x);
   }
   
+  /*
   try {
   	$('#new_task_container input#task_name').blur(function () {
   		if (!$(this).val()) {
@@ -24,7 +25,7 @@ $(function() {
   } catch(x) {
     log(x);
   }
+  */
   
-  
-  
+  $('.datepicker').datepicker();
 });

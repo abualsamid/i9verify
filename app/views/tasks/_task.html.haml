@@ -1,7 +1,7 @@
 %li
 	- if current_user?(task.user)
 		= link_to image_tag("delete.png", width: '16px'), stack_task_path(@stack.id,task.id), method: :delete, data: {confirm: "Confirm deleting task: #{task.name}. Are you sure?"}, title:task.name, remote: true
-	- if task.due < Time.now
+	- if task.due && task.due < Time.now
 		%span.late=task.name
 	- else
 		%span.notlate=task.name
@@ -14,11 +14,19 @@
 				%span.controls
 					- 1.upto(5) do |v|
 						&nbsp;
-						- if v == task.priority
-							<input type='radio' value='#{v}' checked='checked' name='task[priority]' class='star required' />
+						- if v*10 == task.priority
+							<input type='radio' value='#{v*10}' checked='checked' name='task[priority]' class='star required' />
 						- else
-							<input type='radio' value='#{v}' name='task[priority]' class='star required' />
+							<input type='radio' value='#{v*10}' name='task[priority]' class='star required' />
 						&nbsp;
+				%br
+			%ul.rating{class: task.priority_star, id: "rating#{task.id}"}
+				- 1.upto(5) do |v|
+					%li{class: "_#{v}"}
+						%a{href: "javascript:togglePriorty(#{task.id},#{v});"}
+							=v			
+						
+			=f.hidden_field :priority, value: task.priority	
 			%span &nbsp;
 			= f.input :status_id,
 				:collection => [ %w[Open 100], %w[Pending 200], %w[Closed 300]],

@@ -1,24 +1,30 @@
 - if @stack and @task then
 	%h2=@stack.name
-	%fieldset
+	%fieldset{style: 'width:100%'}
 		#new_task_container
-			= simple_form_for([@stack,@task], validate: true, :html => { class: nil }, remote: true) do |f|
-				= render 'shared/error_messages', object: f.object
-				=f.input :name, placeholder: "Task", required: true, validate: {presence: true}, input_html: {class: "required"}
+			=form_for([@stack,@task], validate: true, remote: true) do |f|
+				=render 'shared/error_messages', object: f.object
+				=f.text_field :name, placeholder: "Task", required: true, class: "required", style: 'width:80%;'
 				#new_task_body{style: 'display:none;'}
-					=f.input :description, placeholder: "Description"
-					=f.input :due, :html => {:class => nil}
+					=f.text_area :description, placeholder: "Description", style: 'width:80%;'
+					=f.text_field :due, class: "datepicker date", placeholder: "Due Date"
+					=f.text_field :duetime, class: "time", placeholder: "Due Time"
 					.control-group.radio_buttons.optional
 						%label.radio_buttons.optional.control-label Priority
-						.controls
+						%span.controls
 							- 1.upto(5) do |v|
-								<input type='radio' value='#{v}' name='task[priority]' class='star required' />
+								- if v==3 
+									<input type='radio' value='#{10*v}' name='task[priority]' class='star required' checked='checked' />
+								- else
+									<input type='radio' value='#{10*v}' name='task[priority]' class='star required' />
+					&nbsp;
+					= f.radio_button :status_id, 100, {checked: true}
+					Open
+					= f.radio_button :status_id, 200
+					Pending
+					= f.radio_button :status_id, 300
+					Closed
 					%br
-					= f.input :status_id,
-						:collection => [ %w[Open 100], %w[Pending 200], %w[Closed 300]],
-						:as => :radio_buttons,
-						:item_wrapper_class => 'inline'
 					=f.button :submit, class: "btn btn-medium btn-primary" 
-					=f.error_notification
 			#tasks_errors
 

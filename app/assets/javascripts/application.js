@@ -14,6 +14,5 @@
 //= require jquery_ujs
 //= require jquery-ui
 //= require bootstrap
-//= require jquery.rating.pack
 //= require rails.validations
 //= require_tree .
