@@ -7,11 +7,17 @@ function togglePriorty(id,v) {
 	var $f = $($w.parents("form:first"));
 	var $e = $("#task_priority",$f).eq(0);
 	$e.val(10*v);
-	$f.submit();
+	if (id>0) {
+		$f.submit();
+	}
+	
 }
 
 function toggleStatus(id,v) {
 	var $w=$("#rating" + id);
 	var $f = $($w.parents("form:first"));
-	$f.submit();
+	if(id>0) {
+		$f.submit();
+	}
+	
 }
