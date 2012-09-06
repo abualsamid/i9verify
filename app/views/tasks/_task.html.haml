@@ -1,38 +1,51 @@
 %li
-	- if current_user?(task.user)
-		= link_to image_tag("delete.png", width: '16px'), stack_task_path(@stack.id,task.id), method: :delete, data: {confirm: "Confirm deleting task: #{task.name}. Are you sure?"}, title:task.name, remote: true
 	- if task.due && task.due < Time.now
 		%span.late=task.name
 	- else
 		%span.notlate=task.name
 	%span.content=wrap(task.description)
-	%span.timestamp= "#{time_ago_in_words(task.updated_at)} ago."
-	
+	%span.timestamp.pull-right
+		= "#{time_ago_in_words(task.updated_at)} ago. "
+		&nbsp;
+		- if current_user?(task.user)
+			= link_to raw("<i class='icon-trash'></i>"), stack_task_path(@stack.id,task.id), method: :delete, data: {confirm: "Confirm deleting task: #{task.name}. Are you sure?"}, title:task.name, remote: true
 	- if current_user?(task.user)
 		= simple_form_for([@stack,task], validate: true, :html => { class: 'form-inline' }, remote: true) do |f|
-			%span.control-group.radio_buttons.optional
-				%span.controls
-					- 1.upto(5) do |v|
+			%table
+				%tr 
+					%td
+						%br
+						%ul.rating{class: task.priority_star, id: "rating#{task.id}"}
+							- 1.upto(5) do |v|
+								%li{class: "_#{v}"}
+									%a{href: "javascript:togglePriorty(#{task.id},#{v});"}
+										=v			
+					%td
 						&nbsp;
-						- if v*10 == task.priority
-							<input type='radio' value='#{v*10}' checked='checked' name='task[priority]' class='star required' />
-						- else
-							<input type='radio' value='#{v*10}' name='task[priority]' class='star required' />
-						&nbsp;
-				%br
-			%ul.rating{class: task.priority_star, id: "rating#{task.id}"}
-				- 1.upto(5) do |v|
-					%li{class: "_#{v}"}
-						%a{href: "javascript:togglePriorty(#{task.id},#{v});"}
-							=v			
-						
-			=f.hidden_field :priority, value: task.priority	
-			%span &nbsp;
-			= f.input :status_id,
-				:collection => [ %w[Open 100], %w[Pending 200], %w[Closed 300]],
-				label: false,
-				as: :radio_buttons
-			%span &nbsp;
-			=f.button :submit
+					%td
+								
+						=f.hidden_field :priority, value: task.priority	
+						= f.radio_button :status_id, 100, {onchange: "toggleStatus(#{task.id},100);"}
+						= image_tag('/assets/images/message_new.png', {title: "New"})
+						= f.radio_button :status_id, 200, {onchange: "toggleStatus(#{task.id},200);"}
+						= image_tag('/assets/images/message_in.png', {title: "Incoming"})
+						= f.radio_button :status_id, 300, {onchange: "toggleStatus(#{task.id},300);"}
+						= image_tag('/assets/images/message_empty.png', {title: "Pending"})
+						= f.radio_button :status_id, 400, {onchange: "toggleStatus(#{task.id},400);"}
+						= image_tag('/assets/images/message_full.png', {title: "In Process"})
+						= f.radio_button :status_id, 500, {onchange: "toggleStatus(#{task.id},500);"}
+						= image_tag('/assets/images/message_minus.png', {title: "Minus"})
+						%br
+						= f.radio_button :status_id, 600, {onchange: "toggleStatus(#{task.id},600);"}
+						= image_tag('/assets/images/message_plus.png', {title: "Plus"})
+						= f.radio_button :status_id, 700, {onchange: "toggleStatus(#{task.id},700);"}
+						= image_tag('/assets/images/message_flag.png', {title: "Ready"})
+						= f.radio_button :status_id, 800, {onchange: "toggleStatus(#{task.id},800);"}
+						= image_tag('/assets/images/message_lock.png', {title: "Waiting Dependeny"})
+						= f.radio_button :status_id, 900, {onchange: "toggleStatus(#{task.id},900);"}
+						= image_tag('/assets/images/message_out.png', {title: "Outgoing"})
+						= f.radio_button :status_id, 1000, {onchange: "toggleStatus(#{task.id},1000);"}
+						= image_tag('/assets/images/message_ban.png', {title: "Closed"})
+			
 			=f.error_notification
 		

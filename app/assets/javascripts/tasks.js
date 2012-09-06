@@ -9,3 +9,9 @@ function togglePriorty(id,v) {
 	$e.val(10*v);
 	$f.submit();
 }
+
+function toggleStatus(id,v) {
+	var $w=$("#rating" + id);
+	var $f = $($w.parents("form:first"));
+	$f.submit();
+}
