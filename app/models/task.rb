@@ -8,7 +8,6 @@ class Task < ActiveRecord::Base
 	validates :name, presence: true	
 	validates_presence_of :name
 	default_scope order: 'tasks.status_id, tasks.due DESC, tasks.duetime desc, tasks.priority, tasks.created_at'
-	
 	def priority_star
 		return "onestar" if self.priority == 10
 		return "twostar" if self.priority == 20

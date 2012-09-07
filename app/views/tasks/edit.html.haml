@@ -1,0 +1,69 @@
+- provide(:title, @task.name)
+.row
+	.span12
+		%h1=link_to @stack.name, stack_path(@stack)
+		%hr
+.row
+	.span12
+		- if @task.due && @task.due < Time.now
+			%h3.late
+				=link_to @task.name, edit_stack_task_path(@stack, @task)
+		- else
+			%h3.notlate
+				=link_to @task.name, edit_stack_task_path(@stack,@task)
+		%br
+		#edit_task_container
+			%span.timestamp.pull-right
+				= "#{time_ago_in_words(@task.updated_at)} ago. "
+				&nbsp;
+				- if current_user?(@task.user)
+					= link_to raw("<i class='icon-trash'></i>"), stack_task_path(@stack.id,@task.id), method: :delete, data: {confirm: "Confirm deleting task: #{@task.name}. Are you sure?"}, title:@task.name, remote: true
+
+			=form_for([@stack,@task], validate: true) do |f|
+				=render 'shared/error_messages', object: f.object
+				=f.text_field :name, placeholder: "Task", required: true, class: "required", style: 'width:80%;'
+				#new_task_body
+					=f.text_area :description, placeholder: "Description", style: 'width:80%;', rows:5
+					%br
+					=f.datetime_select( :due,{}, {style: 'width:8em;'} )
+					%table
+						%tr 
+							%th="Priority"
+							%th="Status"
+						%tr
+							%td
+								%br
+								%ul.rating{class: @task.priority_star, id: "rating0"}
+									- 1.upto(5) do |v|
+										%li{class: "_#{v}"}
+											%a{href: "javascript:togglePriorty(0,#{v});"}=v			
+							%td 
+								= f.radio_button :status_id, 100, {checked: true}
+								= image_tag('/assets/images/message_new.png', {title: "New"})
+								= f.radio_button :status_id, 200
+								= image_tag('/assets/images/message_in.png', {title: "Incoming"})
+								= f.radio_button :status_id, 300
+								= image_tag('/assets/images/message_empty.png', {title: "Pending"})
+								= f.radio_button :status_id, 400
+								= image_tag('/assets/images/message_full.png', {title: "In Process"})
+								= f.radio_button :status_id, 500
+								= image_tag('/assets/images/message_minus.png', {title: "Minus"})
+								%br
+								= f.radio_button :status_id, 600
+								= image_tag('/assets/images/message_plus.png', {title: "Plus"})
+								= f.radio_button :status_id, 700
+								= image_tag('/assets/images/message_flag.png', {title: "Ready"})
+								= f.radio_button :status_id, 800
+								= image_tag('/assets/images/message_lock.png', {title: "Waiting Dependeny"})
+								= f.radio_button :status_id, 900
+								= image_tag('/assets/images/message_out.png', {title: "Outgoing"})
+								= f.radio_button :status_id, 1000
+								= image_tag('/assets/images/message_ban.png', {title: "Closed"})
+								
+					=f.hidden_field :priority, value: @task.priority	
+		
+					
+					=f.button :Save, class: "btn btn-medium btn-primary" 
+					%hr
+					=link_to "Back to #{@stack.name}", stack_path(@stack)					
+%br

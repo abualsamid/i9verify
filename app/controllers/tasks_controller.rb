@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
 	before_filter :signed_in_user
 	before_filter :correct_user,   only: [:destroy ]
-	before_filter :correct_user_by_stack_name, only: [:update]
+	before_filter :correct_user_by_stack_name, only: [:update, :edit]
 
 	def new
 		@stack = current_user.stacks.find_by_name(params[:id])
@@ -21,6 +21,7 @@ class TasksController < ApplicationController
 	end
 	
 	def update 
+		redirect_to edit_stack_task_path(@stack,@task) unless params[:cancel].blank?
 		@task.update_attributes(params[:task])
 		if @task.save 
 			flash.now[:success]="Task #{@task.name} updated."
@@ -28,14 +29,16 @@ class TasksController < ApplicationController
 			flash.now[:error]="Failed to Update Task."
 		end if
 		respond_to do |format|
-			format.html {redirect_to @stack}
+			format.html {redirect_to edit_stack_task_path(@stack,@task) }
 			format.js do
-				@tasks = @stack.tasks.paginate(page: params[:page])
+				@tasks = @stack.tasks.where("status_id <> ?",1000).paginate(page: params[:page])
 			end
 		end
 	end
 	
 	def show
+	end
+	def edit 
 	end
 	
 	def create

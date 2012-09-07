@@ -7,7 +7,7 @@ class StacksController < ApplicationController
 		@stack = current_user.stacks.first
 		if @stack then
 			@task = @stack.tasks.build
-			@tasks = @stack.tasks.paginate(page: params[:page])
+			@tasks = @stack.tasks.where("status_id <> ?",1000).paginate(page: params[:page])
 		end
 	
 	end
@@ -18,7 +18,7 @@ class StacksController < ApplicationController
 		@stack = current_user.stacks.find_by_name(params[:id])
 		if !@stack.nil? then
 			@task = @stack.tasks.build
-			@tasks = @stack.tasks.paginate(page: params[:page])
+			@tasks = @stack.tasks.where("status_id <> ?",1000).paginate(page: params[:page])
 		end
 		
 	end
