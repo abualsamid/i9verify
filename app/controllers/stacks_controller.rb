@@ -15,10 +15,13 @@ class StacksController < ApplicationController
 
 	def show
 		
-		@stack = current_user.stacks.find_by_name(params[:id])
+		@stack = current_user.stacks.find params[:id]
 		if !@stack.nil? then
 			@task = @stack.tasks.build
-			@tasks = @stack.tasks.where("status_id <> ?",1000).paginate(page: params[:page])
+			@tasks = @stack.tasks
+					.where("status_id <> ?",1000)
+					.order("due desc, priority desc, status_id desc, updated_at desc")
+					.paginate(page: params[:page])
 		end
 		
 	end

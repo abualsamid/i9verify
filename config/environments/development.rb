@@ -35,5 +35,8 @@ Perfecttrax::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 
+  # fake place so precompiled assets do not load in dev mode
+  config.assets.prefix = "/assets_dev" 
+
   config.serve_static_assets = true
 end

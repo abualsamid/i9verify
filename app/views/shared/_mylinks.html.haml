@@ -1,8 +1,4 @@
-%br
-%ul.nav.nav-tabs.nav-stacked
-	<li><a href='#{stacks_url}'><h4><i class="icon-tag"></i> Tags </h4></a></li>
-	= render @stacks
-= will_paginate @stacks , param_name: 'stacks_page', remote: true
+= render 'stacks/stacks'
 %hr
 %ul.nav.nav-tabs.nav-stacked
 	<li><a href='#{teams_url}'><h4> <i class='icon-user'></i> Contacts </h4> </a></li>

@@ -1,10 +1,9 @@
 - if @stack and @task then
-	%h2=@stack.name
 	%fieldset{style: 'width:100%'}
 		#new_task_container
 			=form_for([@stack,@task], validate: true, remote: true) do |f|
 				=render 'shared/error_messages', object: f.object
-				=f.text_field :name, placeholder: "Task", required: true, class: "required", style: 'width:80%;'
+				=f.text_field :name, placeholder: "Add New Task", required: true, class: "required", style: 'width:80%;'
 				#new_task_body{style: 'display:none;'}
 					=f.text_area :description, placeholder: "Description", style: 'width:80%;', rows:5
 					=f.text_field :due, class: "datepicker date", placeholder: "Due Date"
@@ -46,6 +45,6 @@
 					=f.hidden_field :priority, value: @task.priority	
 		
 					
-					=f.button :submit, class: "btn btn-medium btn-primary" 
+					=f.button "Add Task", class: "btn btn-medium btn-primary" 
 			#tasks_errors
 

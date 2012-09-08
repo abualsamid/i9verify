@@ -1,10 +1,10 @@
 %li
-	- if task.due && task.due < Time.now
-		%span.late
+	- @taskClass = !task.due.nil? && task.due > Time.now ? "late" : "notlate"
+	%span{class: @taskClass}
+		- if task.due.nil? 
 			=link_to task.name, edit_stack_task_path(@stack, task)
-	- else
-		%span.notlate
-			=link_to task.name, edit_stack_task_path(@stack,task)
+		- else
+			=link_to "#{task.name} (#{task.due.localtime})", edit_stack_task_path(@stack,task)
 	%span.content=wrap(task.description)
 	%span.timestamp.pull-right
 		= "#{time_ago_in_words(task.updated_at)} ago. "

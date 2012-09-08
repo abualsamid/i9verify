@@ -6,5 +6,6 @@ class Stack < ActiveRecord::Base
   	has_many :tasks, dependent: :destroy
   	attr_accessible :name
   	validates_uniqueness_of :name, scope:  [:user_id]
-  
+
+	default_scope order: "user_id, name, created_at"  
 end

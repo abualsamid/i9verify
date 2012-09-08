@@ -24,9 +24,9 @@ class TasksController < ApplicationController
 		redirect_to edit_stack_task_path(@stack,@task) unless params[:cancel].blank?
 		@task.update_attributes(params[:task])
 		if @task.save 
-			flash.now[:success]="Task #{@task.name} updated."
+			flash[:success]="Task #{@task.name} updated."
 		else
-			flash.now[:error]="Failed to Update Task."
+			flash[:error]="Failed to Update Task."
 		end if
 		respond_to do |format|
 			format.html {redirect_to edit_stack_task_path(@stack,@task) }

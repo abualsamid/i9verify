@@ -1,3 +1,45 @@
 // Place all the styles related to the stacks controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+ul#stacks {
+	display: table; 
+	width:260px;
+	margin: 30px 0 0; 
+	padding:0px; 
+	background-color: white; 
+	-webkit-border-radius: 6px; 
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	-webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, .065);
+	box-shadow: 0 1px 4px rgba(0, 0, 0, .065);
+	/*position: fixed;
+	top: 40px; */
+	
+	li {
+		line-height: 20px; 
+		list-style:none;
+		div {
+			-webkit-border-radius: 6px 6px 0 0;
+			-moz-border-radius: 6px 6px 0 0;
+			border-radius: 6px 6px 0 0;
+			background-color: white;
+			display: block;
+			margin: 0 0 -1px;	
+			padding: 8px 14px;
+			border: 1px solid #E5E5E5;
+			text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+			a {
+				color: #08C;
+				text-decoration: none;
+				text-shadow: rgba(0, 0, 0, 0.148438) 0px 1px 0px;
+				padding-bottom: 9px;
+				padding-left: 15px;
+				padding-right: 15px;
+				padding-bottom: 9px;
+				margin-bottom: -1px;
+			}
+			
+		}
+	}
+}

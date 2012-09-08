@@ -1,16 +1,21 @@
 - provide(:title, @stack.name)
 .row
+	%aside.span4
+		&nbsp;
+	.span8
+		%h2=@stack.name
+%hr
+.row
 	
 	%aside.span4
-		%h2 My Work Stacks
+		%h2 My Stacks
 		=form_for(@newstack, remote: "true") do |f|
 			= render 'shared/error_messages', object: f.object
 			.field= f.text_field :name, placeholder: "Stack Name"
 			= f.submit "Add Stack", class: "btn btn-medium btn-primary"
 		#stacks_errors
 		%hr
-		#stacks
-			= render partial: 'stacks'
+		= render partial: 'stacks'
 	
 	.span8
 		=render 'tasks/new'

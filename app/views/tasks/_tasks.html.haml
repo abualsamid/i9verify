@@ -1,6 +1,5 @@
 - if @tasks && @tasks.any?
-	%h2 Task List
 	%ol.tasks
 		=render @tasks 
-	= will_paginate @tasks, remote: true
+	= will_paginate @tasks,  param_name: 'page', remote: true
 
