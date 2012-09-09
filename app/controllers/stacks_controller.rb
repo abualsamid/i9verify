@@ -69,16 +69,17 @@ class StacksController < ApplicationController
 			@stack = params[:stack]
 			@n = current_user.stacks.new(@stack)
 			if	@n.save
-				flash.now[:success]="Stack #{@stack[:name]} created."
+				flash[:success]="Stack #{@stack[:name]} created."
 			
 			else
-				flash.now[:error]="Failed to Create Stack #{@stack[:name]}. Duplicate Stack Names are not allowed."
+				flash[:error]="Failed to Create Stack #{@stack[:name]}. Duplicate Stack Names are not allowed."
 			end
 			respond_to do |format|
 		  		format.html { redirect_to stacks_path }
 		  		format.js do
 		  			@stacks = current_user.stacks.paginate(page: params[:page])
-				
+					@newstack = Stack.new
+			
 		  		end
 			end
 			

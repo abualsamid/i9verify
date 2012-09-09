@@ -1,19 +1,8 @@
 - provide(:title,'My Stacks')
+.row=render 'stacks/common_header'
 .row
-
-	%aside.span4
-		%h2 My Work Stacks
-		=form_for(@newstack, remote: "true") do |f|
-			= render 'shared/error_messages', object: f.object
-			.field= f.text_field :name, placeholder: "Stack Name"
-			= f.submit "Add Stack", class: "btn btn-medium btn-primary"
-		#stacks_errors
-		%hr
-		#stacks
-			= render partial: 'stacks'
+	.span4
+		#stacks=render 'stacks'
 	.span8
-		=render 'tasks/new'
-		%hr
-		#tasks
-			=render 'tasks/tasks'
-
+		&nbsp;
+		

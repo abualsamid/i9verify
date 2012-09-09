@@ -2,11 +2,10 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-ul#stacks {
+div#stacks > ul {
 	display: table; 
-	width:260px;
-	margin: 30px 0 0; 
 	padding:0px; 
+	margin: 0px;
 	background-color: white; 
 	-webkit-border-radius: 6px; 
 	-moz-border-radius: 6px;
@@ -19,7 +18,7 @@ ul#stacks {
 	li {
 		line-height: 20px; 
 		list-style:none;
-		div {
+		div.item {
 			-webkit-border-radius: 6px 6px 0 0;
 			-moz-border-radius: 6px 6px 0 0;
 			border-radius: 6px 6px 0 0;

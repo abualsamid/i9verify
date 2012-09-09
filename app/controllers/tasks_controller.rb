@@ -40,7 +40,7 @@ class TasksController < ApplicationController
 	end
 	def edit 
 		@micropost = current_user.microposts.build 
-		@newstack = Stack.new
+		@newstack = current_user.stacks.build
 		@stacks = current_user.stacks.paginate page: params[:stacks_page]
 		@user = current_user
 
@@ -49,10 +49,10 @@ class TasksController < ApplicationController
 	def create
 		begin  
 			
-			@stack = current_user.stacks.find_by_name(params[:stack_id])
+			@stack = current_user.stacks.find(params[:stack_id])
 			
 			if @stack.nil? 
-				flash.now[:error]="Failed to Create Task #{params[:task][:name]}. Could not load Stack: #{params[:id]} ."
+				flash.now[:error]="Failed to Create Task #{params[:task][:name]}. Could not load Stack: #{params[:stack_id]} ."
 			else
 				@task = @stack.tasks.build(params[:task])
 				@task.company_id=0			
@@ -96,7 +96,7 @@ class TasksController < ApplicationController
 		end
 		
 		def correct_user_by_stack_name
-			@stack = current_user.stacks.find_by_name(params[:stack_id])
+			@stack = current_user.stacks.find(params[:stack_id])
 			@task = @stack.tasks.find(params[:id])
 			rescue
   				redirect_to root_path

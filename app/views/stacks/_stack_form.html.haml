@@ -1,0 +1,3 @@
+- if !@newstack.nil?
+	=form_for(@newstack, remote: "true") do |f|
+		.field= f.text_field :name, placeholder: "Add a New Stack Here", style: "width: 100%;"

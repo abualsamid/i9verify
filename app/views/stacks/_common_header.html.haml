@@ -1,0 +1,9 @@
+.span4{style: "text-align: center;"}
+	%h2
+	-if @stack.nil?
+		&nbsp;
+	-else
+		=link_to @stack.name, stack_path(@stack)
+.span8
+	= render 'shared/micropost_form' ,  src: 'stacks'
+

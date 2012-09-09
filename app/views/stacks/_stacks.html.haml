@@ -1,5 +1,9 @@
-%ul#stacks
-	<li ><div><a href='#{stacks_url}'><h4><i class="icon-tag"></i> Stacks </h4></a></div></li>
+%ul
+	%li
+		%div.item
+			<a href='#{stacks_url}'><h4><i class="icon-tag"></i> Stacks </h4></a>
+			= render 'stacks/stack_form'
 	= render @stacks
+	
 = will_paginate @stacks , param_name: 'stacks_page', remote: true
 %hr

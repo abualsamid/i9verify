@@ -1,21 +1,11 @@
 - provide(:title, @task.name)
-.row
-	%aside.span4
-		%h2=link_to @stack.name, stack_path(@stack)
-	.span8
-		= render 'shared/micropost_form' ,  src: 'stacks'
-		
+
+.row=render 'stacks/common_header'
+
 %hr
 .row
-	%aside.span4
-		%h2 My Stacks
-		=form_for(@newstack, remote: "true") do |f|
-			= render 'shared/error_messages', object: f.object
-			.field= f.text_field :name, placeholder: "Stack Name"
-			= f.submit "Add Stack", class: "btn btn-medium btn-primary"
-		#stacks_errors
-		%hr
-		= render partial: 'stacks/stacks'
+	.span4
+		#stacks= render 'stacks/stacks'
 	
 	
 	.span8

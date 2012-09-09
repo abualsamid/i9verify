@@ -3,6 +3,7 @@
 	try {
 		document.forms["new_stack"].reset();
 	} catch(x) {log(x);}
+
 	$("#notice").replaceWith('#{escape_javascript(render partial: 'layouts/flash', locals: {flash: flash }).html_safe}');
-	$("#stacks_errors").html('#{escape_javascript(render partial: 'shared/error_messages', locals: {object: @n })}');
+	$("#stack_name").focus();
 	
