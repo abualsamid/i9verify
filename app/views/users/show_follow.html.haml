@@ -4,11 +4,8 @@
 		%section
 			= gravatar_for @user 
 			%h1= @user.name 
-			%span= link_to "My Profile", @user 
-			%span 
-				%b
-					Crumbs: 
-				=@user.microposts.count  
+			%span= link_to "Profile", @user 
+			%span="#{pluralize(@user.microposts.count, "post")} " 
 		%section
 			=render 'shared/stats'
 			- if @users.any?

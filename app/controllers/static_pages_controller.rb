@@ -5,6 +5,7 @@ class StaticPagesController < ApplicationController
 			@feed_items = current_user.feed.paginate(page: params[:page])
 			@stacks = current_user.stacks.paginate(page: params[:stacks_page])
 			@teams = current_user.teams.paginate(page: params[:teams_page])
+			@user = current_user
 		end
     	
 	end

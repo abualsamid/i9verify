@@ -1,2 +1,2 @@
-=link_to gravatar_for(current_user,size: 24), user_path(current_user)
-%h3= link_to current_user.name, current_user 
+=link_to gravatar_for(@user,size: 24), user_path(@user)
+%h3= link_to @user.name, @user
