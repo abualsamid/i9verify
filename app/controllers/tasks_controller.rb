@@ -39,6 +39,11 @@ class TasksController < ApplicationController
 	def show
 	end
 	def edit 
+		@micropost = current_user.microposts.build 
+		@newstack = Stack.new
+		@stacks = current_user.stacks.paginate page: params[:stacks_page]
+		@user = current_user
+
 	end
 	
 	def create

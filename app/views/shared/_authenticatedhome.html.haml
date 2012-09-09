@@ -4,6 +4,6 @@
 		%section= render 'shared/stats'
 		%section= render 'shared/mylinks'
 	.span8
-		%section= render 'shared/micropost_form'
-		%br
-		=render 'shared/feed'
+		%section= render  'shared/micropost_form' , src: 'home' 
+		%b
+		#feed=render 'shared/feed'

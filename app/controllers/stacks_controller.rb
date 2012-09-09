@@ -16,6 +16,8 @@ class StacksController < ApplicationController
 	def show
 		
 		@stack = current_user.stacks.find params[:id]
+		@micropost = current_user.microposts.build 
+
 		if !@stack.nil? then
 			@task = @stack.tasks.build
 			@tasks = @stack.tasks

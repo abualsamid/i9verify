@@ -1,9 +1,10 @@
 - provide(:title, @stack.name)
 .row
 	%aside.span4
-		&nbsp;
+		%h2=link_to @stack.name, stack_path(@stack)
 	.span8
-		%h2=@stack.name
+		= render 'shared/micropost_form' ,  src: 'stacks'
+		
 %hr
 .row
 	

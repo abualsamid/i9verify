@@ -1,0 +1,7 @@
+:plain
+	document.getElementById("new_micropost").reset();
+	if ($("#feed").length) {
+		$("#feed").html('#{escape_javascript render('shared/feed')}');
+	}
+	$("#notice").replaceWith('#{escape_javascript(render partial: 'layouts/flash', locals: {flash: flash }).html_safe}');
+	

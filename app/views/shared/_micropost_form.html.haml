@@ -1,4 +1,6 @@
-=form_for(@micropost) do |f|
+=form_for @micropost, remote: true do |f|
 	= render 'shared/error_messages', object: f.object
-	=f.text_area :content, placeholder: "say something...", rows: "4", style: 'width:100%'
-	= f.submit "Post", class: "btn btn-mini btn-primary"
+	= f.text_area :content, placeholder: "say something...", rows: "3", style: 'width:80%'
+	= hidden_field_tag :src,  src || "home"
+	%br
+	= f.submit "Post", class: "btn btn-mini btn-primary", style: "valign:bottom;"

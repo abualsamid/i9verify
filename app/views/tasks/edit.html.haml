@@ -1,10 +1,24 @@
 - provide(:title, @task.name)
 .row
-	.span12
-		%h1=link_to @stack.name, stack_path(@stack)
-		%hr
+	%aside.span4
+		%h2=link_to @stack.name, stack_path(@stack)
+	.span8
+		= render 'shared/micropost_form' ,  src: 'stacks'
+		
+%hr
 .row
-	.span12
+	%aside.span4
+		%h2 My Stacks
+		=form_for(@newstack, remote: "true") do |f|
+			= render 'shared/error_messages', object: f.object
+			.field= f.text_field :name, placeholder: "Stack Name"
+			= f.submit "Add Stack", class: "btn btn-medium btn-primary"
+		#stacks_errors
+		%hr
+		= render partial: 'stacks/stacks'
+	
+	
+	.span8
 		- if @task.due && @task.due < Time.now
 			%h3.late
 				=link_to @task.name, edit_stack_task_path(@stack, @task)
@@ -25,7 +39,7 @@
 				#new_task_body
 					=f.text_area :description, placeholder: "Description", style: 'width:80%;', rows:5
 					%br
-					=f.datetime_select( :due,{}, {style: 'width:8em;'} )
+					=f.datetime_select( :due,{include_blank: true}, {style: 'width:8em;'} )
 					%table
 						%tr 
 							%th="Priority"

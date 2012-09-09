@@ -35,11 +35,7 @@
 						= image_tag('/assets/images/message_empty.png', {title: "Pending"})
 						= f.radio_button :status_id, 400, {onchange: "toggleStatus(#{task.id},400);"}
 						= image_tag('/assets/images/message_full.png', {title: "In Process"})
-						= f.radio_button :status_id, 500, {onchange: "toggleStatus(#{task.id},500);"}
-						= image_tag('/assets/images/message_minus.png', {title: "Minus"})
 						%br
-						= f.radio_button :status_id, 600, {onchange: "toggleStatus(#{task.id},600);"}
-						= image_tag('/assets/images/message_plus.png', {title: "Plus"})
 						= f.radio_button :status_id, 700, {onchange: "toggleStatus(#{task.id},700);"}
 						= image_tag('/assets/images/message_flag.png', {title: "Ready"})
 						= f.radio_button :status_id, 800, {onchange: "toggleStatus(#{task.id},800);"}
