@@ -43,7 +43,7 @@ class TasksController < ApplicationController
 		@newstack = current_user.stacks.build
 		@stacks = current_user.stacks.paginate page: params[:stacks_page]
 		@user = current_user
-
+		@feed_items = @task.microposts.page params[:feed_page]
 	end
 	
 	def create

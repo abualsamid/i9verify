@@ -9,7 +9,11 @@ class StacksController < ApplicationController
 			@task = @stack.tasks.build
 			@tasks = @stack.tasks.where("status_id <> ?",1000).paginate(page: params[:page])
 		end
-	
+		respond_to do |format| 
+			format.html
+			format.js 
+		end
+			
 	end
 
 
@@ -25,7 +29,10 @@ class StacksController < ApplicationController
 					.order("due desc, priority desc, status_id desc, updated_at desc")
 					.paginate(page: params[:page])
 		end
-		
+		respond_to do |format|
+			format.html 
+			format.js
+		end
 	end
 		
 	def new
@@ -45,7 +52,11 @@ class StacksController < ApplicationController
 			respond_to do |format|
 		  		format.html { redirect_to stacks_path }
 		  		format.js do
-		  			@stacks = current_user.stacks.paginate(page: params[:page])
+		  			if params[:stacks_page].blank?
+		  				@stacks = current_user.stacks.paginate(page: params[:page])
+		  			else
+		  				@stacks = current_user.stacks.paginate page: params[:stacks_page]
+		  			end 
 				
 		  		end
 			end
@@ -55,7 +66,12 @@ class StacksController < ApplicationController
 			respond_to do |format|
 		  		format.html { redirect_to stacks_path }
 		  		format.js do
-		  			@stacks = current_user.stacks.paginate(page: params[:page])
+		  			if params[:stacks_page].blank?
+		  				@stacks = current_user.stacks.paginate(page: params[:page])
+		  			else
+		  				@stacks = current_user.stacks.paginate page: params[:stacks_page]
+		  			end 
+
 				
 		  		end
 			end
@@ -77,9 +93,13 @@ class StacksController < ApplicationController
 			respond_to do |format|
 		  		format.html { redirect_to stacks_path }
 		  		format.js do
-		  			@stacks = current_user.stacks.paginate(page: params[:page])
 					@newstack = Stack.new
-			
+					if params[:stacks_page].blank?
+		  				@stacks = current_user.stacks.paginate(page: params[:page])
+		  			else
+		  				@stacks = current_user.stacks.paginate page: params[:stacks_page]
+		  			end 
+		  			
 		  		end
 			end
 			
@@ -88,7 +108,12 @@ class StacksController < ApplicationController
 			respond_to do |format|
 		  		format.html { redirect_to stacks_path }
 		  		format.js do
-		  			@stacks = current_user.stacks.paginate(page: params[:page])
+		  			if params[:stacks_page].blank?
+		  				@stacks = current_user.stacks.paginate(page: params[:page])
+		  			else
+		  				@stacks = current_user.stacks.paginate page: params[:stacks_page]
+		  			end 
+		  			
 				
 		  		end
 			end
@@ -98,7 +123,12 @@ class StacksController < ApplicationController
 	
 	private
 		def prep_stacks
-			@stacks = current_user.stacks.paginate page: params[:stacks_page]
+			if params[:stacks_page].blank?
+		  		@stacks = current_user.stacks.page(params[:page]).order("name")
+		  	else
+		  		@stacks = current_user.stacks.page( params[:stacks_page]).order("name")
+		  	end 
+
 			@newstack = Stack.new
 			@user = current_user
 

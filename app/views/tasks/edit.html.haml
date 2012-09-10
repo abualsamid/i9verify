@@ -68,6 +68,15 @@
 		
 					
 					=f.button :Save, class: "btn btn-medium btn-primary" 
-					%hr
-					=link_to "Back to #{@stack.name}", stack_path(@stack)					
+			%hr
+			=form_for([@stack, @task,@micropost], validate: true, remote:true) do |f|
+				%div
+					= f.text_area :content, placeholder: "got notes?", rows: "3", style: 'width:80%'
+					= hidden_field_tag :src, "edit_task"
+					%span{style: "display:inline-block; vertical-align:bottom;"}
+						= f.submit "Add Note", class: "btn btn-mini btn-primary", style: "valign:bottom;"
+			#feed=render 'shared/feed'
+				
+		%hr
+			=link_to "Back to #{@stack.name}", stack_path(@stack)					
 %br

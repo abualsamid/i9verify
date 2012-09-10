@@ -7,8 +7,9 @@ Perfecttrax::Application.routes.draw do
   end
   resources :teams
   resources :stacks do
-  	resources :tasks
-  
+  	resources :tasks do
+  		resources :microposts
+  	end
   end
   resources :sessions, only: [:new, :create, :destroy]
   resources :microposts, only: [:create, :destroy]

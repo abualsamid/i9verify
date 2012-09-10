@@ -4,16 +4,28 @@ class MicropostsController < ApplicationController
 
 	def create
 		@micropost = current_user.microposts.build(params[:micropost])
+		if !params[:task_id].nil? && !params[:stack_id].nil?
+			@s = Stack.find params[:stack_id]
+			@t = @s.tasks.find params[:task_id]
+			if !@t.nil?
+				@micropost.task_id = @t.id
+			end
+			
+		end
 		@feed_items = []	
 		if @micropost.save
 			respond_to do |format|
 		  		format.html { redirect_to root_path }
 		  		format.js do
-					if params[:src]=='home' 
-						@feed_items = current_user.feed.paginate(page: params[:page])
-					else
-						flash[:success] = "Posted"
-					end
+		  			case params[:src]
+		  				when 'home'
+		  					@feed_items = current_user.feed.paginate(page: params[:page])
+		  				when 'edit_task'
+		  					@feed_items = @t.microposts.page(params[:feed_page])
+		  				else
+		  					flash[:success] = "Posted"
+		  			end
+					render partial: 'shared/inlinefeed.js.haml'
 		  		end
 			end
 		else

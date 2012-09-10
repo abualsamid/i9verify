@@ -1,6 +1,6 @@
 :plain
 	try {
-		$("#stacks").html('<li><div><a href="#{stacks_url}"><h4><i class="icon-tag"></i> Stacks </h4></a></div></li>').append('#{escape_javascript render @stacks }');
+		$("#stacks").html('#{escape_javascript render('stacks/stacks')}');
 	} catch(x) {log(x);}
 	$("#notice").replaceWith('#{escape_javascript(render partial: 'layouts/flash', locals: {flash: flash }).html_safe}');
 	$("#stacks_errors").html('#{escape_javascript(render partial: 'shared/error_messages', locals: {object: @n })}');

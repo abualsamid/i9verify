@@ -5,5 +5,5 @@
 			= render 'stacks/stack_form'
 	= render @stacks
 	
-= will_paginate @stacks , param_name: 'stacks_page', remote: true
+= will_paginate @stacks , param_name: 'stacks_page', remote: true, params: { controller: "stacks", action: "index" }
 %hr
