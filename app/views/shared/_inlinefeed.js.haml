@@ -1,3 +1,9 @@
 :plain
-	$("#feed").html('#{escape_javascript render('shared/feed')}');
+	if ($("#feed").length) {
+		$("#feed").html('#{escape_javascript render('shared/feed')}');
+	}
+	try { document.forms["new_micropost"].reset()} catch(x){}
+	try { $("#notice").replaceWith('#{escape_javascript(render partial: 'layouts/flash', locals: {flash: flash }).html_safe}');} catch(x) {}
+	
+	
 

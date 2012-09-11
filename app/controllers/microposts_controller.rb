@@ -25,7 +25,7 @@ class MicropostsController < ApplicationController
 		  				else
 		  					flash[:success] = "Posted"
 		  			end
-					render partial: 'shared/inlinefeed.js.haml'
+					render partial: 'shared/inlinefeed.js'
 		  		end
 			end
 		else

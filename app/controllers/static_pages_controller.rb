@@ -6,6 +6,7 @@ class StaticPagesController < ApplicationController
 			@stacks = current_user.stacks.paginate(page: params[:stacks_page])
 			@teams = current_user.teams.paginate(page: params[:teams_page])
 			@user = current_user
+			@newstack = current_user.stacks.build
 		end
     	
 	end

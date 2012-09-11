@@ -36,7 +36,7 @@ class StacksController < ApplicationController
 	end
 		
 	def new
-		@newstack = Stack.new
+		@newstack = current_user.stacks.build
 	end
 
 	def destroy
@@ -93,7 +93,7 @@ class StacksController < ApplicationController
 			respond_to do |format|
 		  		format.html { redirect_to stacks_path }
 		  		format.js do
-					@newstack = Stack.new
+					@newstack = current_user.stacks.build
 					if params[:stacks_page].blank?
 		  				@stacks = current_user.stacks.paginate(page: params[:page])
 		  			else
@@ -129,7 +129,7 @@ class StacksController < ApplicationController
 		  		@stacks = current_user.stacks.page( params[:stacks_page]).order("name")
 		  	end 
 
-			@newstack = Stack.new
+			@newstack = current_user.stacks.build
 			@user = current_user
 
 		end
