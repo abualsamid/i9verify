@@ -1,9 +1,13 @@
 :plain
+	try { $("#notice").replaceWith('#{escape_javascript(render "layouts/flash", locals: {flash: flash }).html_safe}');} catch(x) { console.log("Notice: " + x);}
 	if ($("#feed").length) {
-		$("#feed").html('#{escape_javascript render('shared/feed')}');
+		$("#feed").html('#{escape_javascript render("shared/feed")}');
 	}
-	try { document.forms["new_micropost"].reset()} catch(x){}
-	try { $("#notice").replaceWith('#{escape_javascript(render partial: 'layouts/flash', locals: {flash: flash }).html_safe}');} catch(x) {}
+	
+	try { document.getElementById("new_micropost").reset();} catch(x){ }
+	try { document.forms["new_micropost_for_task"].reset();} catch(x){ }
+	
+	
 	
 	
 
