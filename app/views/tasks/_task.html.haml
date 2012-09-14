@@ -1,4 +1,5 @@
-%li.draggable.task{task_id: task.id, stack_id: task.stack_id}
+%li.task{task_id: task.id, stack_id: task.stack_id}
+	<i class="icon-move draggable" task_id="#{task.id}" stack_id="#{task.stack_id}" ></i>
 	- @taskClass = !task.due.nil? && task.due > Time.now ? "late" : "notlate"
 	%span{class: @taskClass}
 		- if task.due.nil? 
@@ -7,11 +8,6 @@
 			=link_to "#{task.name} (#{task.due.localtime})", edit_stack_task_path(@stack,task)
 	%div
 		%span.content=wrap(task.description)
-		%span.timestamp.pull-right
-			= "#{time_ago_in_words(task.updated_at)} ago. "
-			&nbsp;
-			- if current_user?(task.user)
-				= link_to raw("<i class='icon-trash'></i>"), stack_task_path(@stack.id,task.id), method: :delete, data: {confirm: "Confirm deleting task: #{task.name}. Are you sure?"}, title:task.name, remote: true
 		- if current_user?(task.user)
 			= simple_form_for([@stack,task], validate: true, :html => { class: 'form-inline' }, remote: true) do |f|
 				%table
@@ -36,7 +32,6 @@
 							= image_tag('/assets/images/message_empty.png', {title: "Pending"})
 							= f.radio_button :status_id, 400, {onchange: "toggleStatus(#{task.id},400);"}
 							= image_tag('/assets/images/message_full.png', {title: "In Process"})
-							%br
 							= f.radio_button :status_id, 700, {onchange: "toggleStatus(#{task.id},700);"}
 							= image_tag('/assets/images/message_flag.png', {title: "Ready"})
 							= f.radio_button :status_id, 800, {onchange: "toggleStatus(#{task.id},800);"}
@@ -47,4 +42,11 @@
 							= image_tag('/assets/images/message_ban.png', {title: "Closed"})
 			
 				=f.error_notification
+			%br
+		%span.timestamp.pull-right
+			= "#{time_ago_in_words(task.updated_at)} ago. "
+			&nbsp;
+			- if current_user?(task.user)
+				= link_to raw("<i class='icon-trash'></i>"), stack_task_path(@stack.id,task.id), method: :delete, data: {confirm: "Confirm deleting task: #{task.name}. Are you sure?"}, title:task.name, remote: true
+		
 		
