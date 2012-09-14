@@ -20,6 +20,8 @@ doc/
 .project
 bundler_stubs/
 config/
+config/*
+config/unicorn.rb
 database.yml
 
 *.rbc

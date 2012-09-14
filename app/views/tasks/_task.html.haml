@@ -1,49 +1,50 @@
-%li
+%li.draggable.task{task_id: task.id, stack_id: task.stack_id}
 	- @taskClass = !task.due.nil? && task.due > Time.now ? "late" : "notlate"
 	%span{class: @taskClass}
 		- if task.due.nil? 
 			=link_to task.name, edit_stack_task_path(@stack, task)
 		- else
 			=link_to "#{task.name} (#{task.due.localtime})", edit_stack_task_path(@stack,task)
-	%span.content=wrap(task.description)
-	%span.timestamp.pull-right
-		= "#{time_ago_in_words(task.updated_at)} ago. "
-		&nbsp;
+	%div
+		%span.content=wrap(task.description)
+		%span.timestamp.pull-right
+			= "#{time_ago_in_words(task.updated_at)} ago. "
+			&nbsp;
+			- if current_user?(task.user)
+				= link_to raw("<i class='icon-trash'></i>"), stack_task_path(@stack.id,task.id), method: :delete, data: {confirm: "Confirm deleting task: #{task.name}. Are you sure?"}, title:task.name, remote: true
 		- if current_user?(task.user)
-			= link_to raw("<i class='icon-trash'></i>"), stack_task_path(@stack.id,task.id), method: :delete, data: {confirm: "Confirm deleting task: #{task.name}. Are you sure?"}, title:task.name, remote: true
-	- if current_user?(task.user)
-		= simple_form_for([@stack,task], validate: true, :html => { class: 'form-inline' }, remote: true) do |f|
-			%table
-				%tr 
-					%td
-						%br
-						%ul.rating{class: task.priority_star, id: "rating#{task.id}"}
-							- 1.upto(5) do |v|
-								%li{class: "_#{v}"}
-									%a{href: "javascript:togglePriorty(#{task.id},#{v});"}
-										=v			
-					%td
-						&nbsp;
-					%td
+			= simple_form_for([@stack,task], validate: true, :html => { class: 'form-inline' }, remote: true) do |f|
+				%table
+					%tr 
+						%td
+							%br
+							%ul.rating{class: task.priority_star, id: "rating#{task.id}"}
+								- 1.upto(5) do |v|
+									%li{class: "_#{v}"}
+										%a{href: "javascript:togglePriorty(#{task.id},#{v});"}
+											=v			
+						%td
+							&nbsp;
+						%td
 								
-						=f.hidden_field :priority, value: task.priority	
-						= f.radio_button :status_id, 100, {onchange: "toggleStatus(#{task.id},100);"}
-						= image_tag('/assets/images/message_new.png', {title: "New"})
-						= f.radio_button :status_id, 200, {onchange: "toggleStatus(#{task.id},200);"}
-						= image_tag('/assets/images/message_in.png', {title: "Incoming"})
-						= f.radio_button :status_id, 300, {onchange: "toggleStatus(#{task.id},300);"}
-						= image_tag('/assets/images/message_empty.png', {title: "Pending"})
-						= f.radio_button :status_id, 400, {onchange: "toggleStatus(#{task.id},400);"}
-						= image_tag('/assets/images/message_full.png', {title: "In Process"})
-						%br
-						= f.radio_button :status_id, 700, {onchange: "toggleStatus(#{task.id},700);"}
-						= image_tag('/assets/images/message_flag.png', {title: "Ready"})
-						= f.radio_button :status_id, 800, {onchange: "toggleStatus(#{task.id},800);"}
-						= image_tag('/assets/images/message_lock.png', {title: "Waiting Dependeny"})
-						= f.radio_button :status_id, 900, {onchange: "toggleStatus(#{task.id},900);"}
-						= image_tag('/assets/images/message_out.png', {title: "Outgoing"})
-						= f.radio_button :status_id, 1000, {onchange: "toggleStatus(#{task.id},1000);"}
-						= image_tag('/assets/images/message_ban.png', {title: "Closed"})
+							=f.hidden_field :priority, value: task.priority	
+							= f.radio_button :status_id, 100, {onchange: "toggleStatus(#{task.id},100);"}
+							= image_tag('/assets/images/message_new.png', {title: "New"})
+							= f.radio_button :status_id, 200, {onchange: "toggleStatus(#{task.id},200);"}
+							= image_tag('/assets/images/message_in.png', {title: "Incoming"})
+							= f.radio_button :status_id, 300, {onchange: "toggleStatus(#{task.id},300);"}
+							= image_tag('/assets/images/message_empty.png', {title: "Pending"})
+							= f.radio_button :status_id, 400, {onchange: "toggleStatus(#{task.id},400);"}
+							= image_tag('/assets/images/message_full.png', {title: "In Process"})
+							%br
+							= f.radio_button :status_id, 700, {onchange: "toggleStatus(#{task.id},700);"}
+							= image_tag('/assets/images/message_flag.png', {title: "Ready"})
+							= f.radio_button :status_id, 800, {onchange: "toggleStatus(#{task.id},800);"}
+							= image_tag('/assets/images/message_lock.png', {title: "Waiting Dependeny"})
+							= f.radio_button :status_id, 900, {onchange: "toggleStatus(#{task.id},900);"}
+							= image_tag('/assets/images/message_out.png', {title: "Outgoing"})
+							= f.radio_button :status_id, 1000, {onchange: "toggleStatus(#{task.id},1000);"}
+							= image_tag('/assets/images/message_ban.png', {title: "Closed"})
 			
-			=f.error_notification
+				=f.error_notification
 		

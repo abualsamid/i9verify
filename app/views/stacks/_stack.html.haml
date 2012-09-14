@@ -1,9 +1,11 @@
-%li
-	%div.item
+%li.stack{stack_id: stack.slug}
+	.item{style: "background-color: whitesmoke"}
 		- if stack==@stack 
 			%span{style: "padding-left:15px;padding-bottom:9px;padding-top:9px;font-weight:bold;font-size:larger;"}=stack.name
 		- else
 			= link_to "#{stack.name} (#{stack.tasks.count})",stack
 		- if stack.tasks.count==0 && current_user?(stack.user) && stack!=@stack
-			%span.pull-right= link_to raw("&times; &nbsp;"), stack, method: :delete, remote: true, data: {confirm: "Confirm Deleting #{stack.name} ?"}, class: "close pt-close", style: "color: red;"
+			%br
+			%span.pull-right= link_to raw("<i class='icon-trash'></i>"), stack, method: :delete, remote: true, data: {confirm: "Confirm Deleting #{stack.name} ?"}
+			%br
 			

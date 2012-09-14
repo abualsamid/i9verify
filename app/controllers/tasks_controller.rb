@@ -22,18 +22,37 @@ class TasksController < ApplicationController
 	
 	def update 
 		redirect_to edit_stack_task_path(@stack,@task) unless params[:cancel].blank?
-		@task.update_attributes(params[:task])
-		if @task.save 
-			flash[:success]="Task #{@task.name} updated."
+		if params[:new_stack_id].blank?
+			@task.update_attributes(params[:task])
+			if @task.save 
+				flash[:success]="Task #{@task.name} updated."
+			else
+				flash[:error]="Failed to Update Task."
+			end if
+			respond_to do |format|
+				format.html {redirect_to edit_stack_task_path(@stack,@task) }
+				format.js do
+					@tasks = @stack.tasks.where("status_id <> ?",1000).paginate(page: params[:page])
+				end
+			end		
+		
 		else
-			flash[:error]="Failed to Update Task."
-		end if
-		respond_to do |format|
-			format.html {redirect_to edit_stack_task_path(@stack,@task) }
-			format.js do
-				@tasks = @stack.tasks.where("status_id <> ?",1000).paginate(page: params[:page])
-			end
+			new_stack = current_user.stacks.find(params[:new_stack_id])
+			@task.update_attribute(:stack_id, new_stack.id)
+			if @task.save 
+				flash[:success]="Task #{@task.name} updated."
+			else
+				flash[:error]="Failed to Update Task."
+			end if
+			respond_to do |format|
+				format.html {redirect_to edit_stack_task_path(@stack,@task) }
+				format.js do
+					@tasks = nil
+				end
+			end		
+		
 		end
+		
 	end
 	
 	def show

@@ -2,7 +2,7 @@ class Task < ActiveRecord::Base
 	belongs_to :stack 
 	belongs_to :user
   	has_many :microposts
-  	attr_accessible :description, :due, :name, :priority, :status_id, :duetime
+  	attr_accessible :description, :due, :name, :priority, :status_id, :duetime, :stack_id
 	validates :stack_id, presence: true
 	validates :user_id, presence: true
 	validates :company_id, presence: true
