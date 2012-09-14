@@ -26,18 +26,12 @@
 							=f.hidden_field :priority, value: task.priority	
 							= f.radio_button :status_id, 100, {onchange: "toggleStatus(#{task.id},100);"}
 							= image_tag('/assets/images/message_new.png', {title: "New"})
-							= f.radio_button :status_id, 200, {onchange: "toggleStatus(#{task.id},200);"}
-							= image_tag('/assets/images/message_in.png', {title: "Incoming"})
-							= f.radio_button :status_id, 300, {onchange: "toggleStatus(#{task.id},300);"}
-							= image_tag('/assets/images/message_empty.png', {title: "Pending"})
 							= f.radio_button :status_id, 400, {onchange: "toggleStatus(#{task.id},400);"}
-							= image_tag('/assets/images/message_full.png', {title: "In Process"})
+							= image_tag('/assets/images/message_full.png', {title: "Active"})
 							= f.radio_button :status_id, 700, {onchange: "toggleStatus(#{task.id},700);"}
-							= image_tag('/assets/images/message_flag.png', {title: "Ready"})
+							= image_tag('/assets/images/message_minus.png', {title: "Not Active"})
 							= f.radio_button :status_id, 800, {onchange: "toggleStatus(#{task.id},800);"}
-							= image_tag('/assets/images/message_lock.png', {title: "Waiting Dependeny"})
-							= f.radio_button :status_id, 900, {onchange: "toggleStatus(#{task.id},900);"}
-							= image_tag('/assets/images/message_out.png', {title: "Outgoing"})
+							= image_tag('/assets/images/message_lock.png', {title: "Pending Dependeny"})
 							= f.radio_button :status_id, 1000, {onchange: "toggleStatus(#{task.id},1000);"}
 							= image_tag('/assets/images/message_ban.png', {title: "Closed"})
 			
